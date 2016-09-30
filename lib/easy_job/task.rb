@@ -23,7 +23,7 @@ module EasyJob
       wrapper
     end
 
-    # Perform task on given interval.
+    # Perform task on given interval. Return an `Array[TaskWrapper, TimerTask]`.
     #
     # == Parameters:
     # interval::
@@ -31,12 +31,13 @@ module EasyJob
     #
     # timeout_interval::
     #   number of seconds a task can run before it is considered to have failed
+    #   (default: 9_999)
     #
     # starts_at::
     #   time of first execution
     #   nil is equal to Time.now + interval (default)
     #
-    def self.perform_every(*args, interval:, timeout_interval:, start_at: nil)
+    def self.perform_every(*args, interval:, timeout_interval: 9_999, start_at: nil)
       if start_at.is_a?(Time)
         start_at = start_at - Time.now
       end
@@ -51,6 +52,8 @@ module EasyJob
       task.execution_interval = interval
       task.timeout_interval = timeout_interval
       task.execute_after(start_at)
+
+      [wrapper, task]
     end
 
     def perform(*)
