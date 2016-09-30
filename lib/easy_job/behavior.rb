@@ -3,9 +3,6 @@
 # NOT used in current version
 # Just and idea
 
-##
-# EasyJob::Behavior
-#
 # Container for behavior definition
 #
 module EasyJob
@@ -37,9 +34,6 @@ module EasyJob
   end
 end
 
-##
-# EasyJob::TaskWrapper
-#
 # Modified wrapper
 #
 module EasyJob
@@ -60,7 +54,6 @@ module EasyJob
 end
 
 
-##
 # Definition of behavior
 #
 EasyJob::Behavior.define 'Database' do
@@ -93,7 +86,7 @@ EasyJob::Behavior.define 'RedmineEnv' do
     @current_locale = I18n.locale
   end
 
-  on_create do |task|
+  on_perform do |task|
     begin
       orig_user = User.current
       orig_locale = I18n.locale
@@ -104,6 +97,20 @@ EasyJob::Behavior.define 'RedmineEnv' do
       User.current = orig_user
       I18n.locale = orig_locale
     end
+  end
+
+end
+
+EasyJob::Behavior.define 'Tenant' do
+
+  before 'Database'
+
+  on_create do
+    @current_tenant = Apartment::Tenant.current
+  end
+
+  on_perform do |task|
+    Apartment::Tenant.switch(@current_tenant){ super }
   end
 
 end

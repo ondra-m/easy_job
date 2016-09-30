@@ -69,6 +69,15 @@ end
 PDFJob.perform_async(Issue.ids, Project.first.id)
 ```
 
+### Tenant
+
+If you are using tenant you can simply use
+
+```ruby
+require 'easy_job/tenant_wrapper'
+```
+
+
 ## Ideas for next version
 
 - Behaviour model.
