@@ -75,3 +75,4 @@ end
 require 'easy_job/version'
 require 'easy_job/ext/object'
 require 'easy_job/rails/message_delivery_patch'
+require 'easy_job/concurrent/timer_task'

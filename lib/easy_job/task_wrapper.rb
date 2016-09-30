@@ -32,8 +32,9 @@ module EasyJob
       @state == STATE_FINISHED
     end
 
-    def perform
+    def perform(**options)
       @job = @task_class.new
+      @job.job_options = options
       @job.job_id = SecureRandom.uuid
 
       ensure_connection {
