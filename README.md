@@ -1,8 +1,6 @@
 # EasyJob
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/easy_job`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Asynchronous job for Redmine, EasyRedmine and EasyProject.
 
 ## Installation
 
@@ -22,15 +20,42 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Delay jobs
 
-## Development
+Every methods called after `.easy_delay` will be delayed and executed on other thread. This method could be used for any ruby Object.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```ruby
+# Reschedule first issue to today
+Issue.first.easy_delay.reschedule_on(Date.today)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+# Save ORM object with lot of callbacks
+[Issue.new, Issue.new].map { |i| i.easy_delay.save }
+```
+
+### Mailer jobs
+
+Deliver email later.
+
+```ruby
+# Generating and sending will be done later
+Mailer.issue_add(issue, ['test@example.net'], []).easy_deliver
+
+# Email is generated now but send later
+Mailer.issue_add(issue, ['test@example.net'], []).easy_safe_deliver
+```
+
+### Custom jobs
+
+You can also create custom task with own exceptions capturing.
+
+```ruby
+
+```
+
+## Next version
+
+Behaviour model.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/easy_job.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/ondra-m/easy_job.
