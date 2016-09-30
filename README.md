@@ -48,6 +48,15 @@ Mailer.issue_add(issue, ['test@example.net'], []).easy_safe_deliver
 
 You can also create custom task with own exceptions capturing.
 
+Job can be started with 3 calling:
+
+- `.perform_async(*args)` started when pool cointains free worker
+- `.perform_in(*args, interval:)` job is added to queue after interval second
+- `.perform_every(*args, interval:, timeout:, start_at:)` job is executed every delay second
+  - **interval:** seconds between task executions (required)
+  - **timeout:** max seconds for running (optional)
+  - **start_at:** time of first execution (optional)
+
 ```ruby
 class PDFJob < EasyJob::RedmineTask
 

@@ -15,7 +15,7 @@ module EasyJob
       wrapper
     end
 
-    def self.perform_in(interval, *args)
+    def self.perform_in(*args, interval:)
       wrapper = TaskWrapper.new(self, args)
       queue = EasyJob.get_queue(queue_name)
       concurrent_job = Concurrent::ScheduledTask.execute(interval.to_f, args: wrapper, executor: queue.pool, &:perform)
