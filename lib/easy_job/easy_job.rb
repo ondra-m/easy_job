@@ -1,3 +1,0 @@
-class EasyJob
-
-end
