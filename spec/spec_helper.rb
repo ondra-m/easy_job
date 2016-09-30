@@ -3,8 +3,9 @@ $LOAD_PATH.unshift(lib) if !$LOAD_PATH.include?(lib)
 
 require 'easy_job'
 
-require 'redmine'
-require 'test_task'
+# Rails
+require File.expand_path('../../.redmine/config/environment', __FILE__)
+require 'rspec/rails'
 
 RSpec.configure do |config|
   config.default_formatter = 'doc'

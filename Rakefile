@@ -7,6 +7,6 @@ task default: :spec
 
 namespace :test do
   task :prepare do
-
+    Kernel.system('./test_prepare.sh')
   end
 end
