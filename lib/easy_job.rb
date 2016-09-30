@@ -1,11 +1,11 @@
-require "easy_job/version"
 require 'monitor'
 require 'concurrent'
+require 'securerandom'
 
 module EasyJob
-  # Your code goes here...
   extend MonitorMixin
   autoload :Task,           'easy_job/task'
+  autoload :TaskWrapper,    'easy_job/task_wrapper'
   def self.get_queue(name)
     synchronize do
       @@queues ||= Concurrent::Map.new
