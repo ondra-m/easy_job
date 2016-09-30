@@ -11,14 +11,12 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Ondřej Moravčík']
   spec.email         = ['moravcik.ondrej@gmail.com']
 
-  spec.summary       = %q{Asynchronous job for easyproject}
+  spec.summary       = %q{Asynchronous job for Redmine, EasyRedmine and EasyProject}
   spec.description   = %q{}
   spec.homepage      = 'https://github.com/ondra-m/easy_job'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  # spec.bindir        = 'exe'
-  # spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 2.1'
