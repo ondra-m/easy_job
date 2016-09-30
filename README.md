@@ -49,12 +49,32 @@ Mailer.issue_add(issue, ['test@example.net'], []).easy_safe_deliver
 You can also create custom task with own exceptions capturing.
 
 ```ruby
+class PDFJob < EasyJob::RedmineTask
 
+  include IssuesHelper
+
+  def perform(issue_ids, project_id)
+    issues = Issue.where(id: issue_ids)
+    project = Project.find(project_id)
+    query = IssueQuery.new
+
+    result = issues_to_pdf(issues, project, query)
+
+    path = Rails.root.join('public', 'issues.pdf')
+    File.open(path, 'wb') {|f| f.write(result) }
+  end
+
+end
+
+PDFJob.perform_async(Issue.ids, Project.first.id)
 ```
 
-## Next version
+## Ideas for next version
 
-Behaviour model.
+- Behaviour model.
+- Repeat after failing.
+- Dashboard.
+- Queue defining.
 
 ## Contributing
 
